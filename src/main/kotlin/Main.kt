@@ -38,8 +38,32 @@ fun main() {
 
         while (i < timeTable.size) {
 
-            val lectureKey: MilitaryTime = timeTable.keys.elementAt(i)
-            val lectureValue = timeTable[lectureKey]
+            val onlineClassKey: MilitaryTime = timeTable.keys.elementAt(i)
+            val onlineClassVal = timeTable[onlineClassKey]
+
+            val currentMilitaryTime = MilitaryTime(getCurrentTime())
+            val lastEntryTime = onlineClassKey.add(MilitaryTime(0, 10))
+
+            println("Current Time: ${currentMilitaryTime.time}")
+            println("Class Time: ${onlineClassKey.time}")
+            println("Last Entry Time: ${lastEntryTime.time}")
+
+            // Class missed
+            if (currentMilitaryTime.isGreaterThan(lastEntryTime)) {
+                println("Missed the ${onlineClassKey.time} $onlineClassVal class")
+                i++
+                continue
+            }
+
+            // Current class has not yet started, wait it out
+            if (currentMilitaryTime.isLessThan(onlineClassKey)) {
+
+                val diffMilitaryTime = onlineClassKey.subtract(currentMilitaryTime)
+
+                println("The $onlineClassKey $onlineClassVal class will start in ${diffMilitaryTime.time}")
+                println("Sleeping...")
+                Thread.sleep(diffMilitaryTime.toMillis())
+            }
 
             // Wait for the search icon to appear and then click on it
             val bySearchIcon = By.cssSelector("#main-content-inner > div > header > div > div > button > bb-svg-icon")
@@ -51,27 +75,33 @@ fun main() {
             explicitWait.until(ExpectedConditions.presenceOfElementLocated(bySearchBox))
             findElement(bySearchBox).apply {
                 clear()
-                sendKeys(lectureValue)
+                sendKeys(onlineClassVal)
             }
 
-            // Wait for the desired course to be visible
-            val byLectureName = By.linkText(lectureValue)
-            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byLectureName))
+            // Wait for the desired course to be visible and click on it
+            val byOnlineClassName = By.linkText(onlineClassVal)
+            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byOnlineClassName))
+            findElement(byOnlineClassName).click()
 
-
-            val currentMilitaryTime = MilitaryTime(getCurrentTime())
-
-            // TODO: If current lecture has not yet started, wait it out
+            // Room is not yet available, retry after 1 minute
+            // TODO: Place a proper condition
+            if (true) {
+                println("Room for the ${onlineClassKey.time} $onlineClassVal class is not yet available.")
+                println("Will try again after 1 minute...")
+                navigate().back()
+                navigate().refresh()
+                Thread.sleep(60 * 1000)
+                continue
+            }
 
             // Open class and log entry
-            findElement(byLectureName).click()
-            println("Joining class: $lectureValue at ${getCurrentTime()}")
+            println("Joining class: $onlineClassVal at ${getCurrentTime()}")
 
-            // TODO: Sleep for the remaining lecture time
+            // TODO: Sleep for the remaining class time
             Thread.sleep(5000)
 
             // Close class and log exit
-            println("Exiting class: $lectureValue at ${getCurrentTime()}")
+            println("Exiting class: $onlineClassVal at ${getCurrentTime()}")
             navigate().back()
             navigate().refresh()
 

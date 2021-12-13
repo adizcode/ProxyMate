@@ -6,6 +6,7 @@ data class MilitaryTime(val hours: Int, val minutes: Int) {
 
     constructor(timeString: String) : this(timeString.substring(0, 2).toInt(), timeString.substring(2).toInt())
 
+    // MilitaryTime in String format
     val time: String
         get() =
             hours.toString().padStart(2, '0') +
@@ -36,5 +37,23 @@ data class MilitaryTime(val hours: Int, val minutes: Int) {
         val newHours = hours - timeToSubtract.hours - negCarry
 
         return MilitaryTime(newHours, newMinutes)
+    }
+
+    // Compare two MilitaryTime instances for equality
+    fun isEqualTo(timeToCompareTo: MilitaryTime): Boolean =
+        hours == timeToCompareTo.hours && minutes == timeToCompareTo.minutes
+
+    // Compare two MilitaryTime instances for inequality (lesser than)
+    fun isLessThan(timeToCompareTo: MilitaryTime): Boolean =
+        hours < timeToCompareTo.hours || (hours == timeToCompareTo.hours && minutes < timeToCompareTo.minutes)
+
+    // Compare two MilitaryTime instances for inequality (greater than)
+    fun isGreaterThan(timeToCompareTo: MilitaryTime): Boolean =
+        hours > timeToCompareTo.hours || (hours == timeToCompareTo.hours && minutes > timeToCompareTo.minutes)
+
+    // Convert MilitaryTime to milliseconds
+    fun toMillis(): Long {
+        val totalMinutes = (hours * 60) + minutes.toLong()
+        return totalMinutes * 60 * 1000
     }
 }
