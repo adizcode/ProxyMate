@@ -13,7 +13,7 @@ const val PLSQL_LAB = "PL/SQL LAB"
 const val SPM = "SOFTWARE PROJECT MANAGEMENT"
 
 // Time Table
-val TIME_TABLE = mapOf(
+val TIME_TABLE = linkedMapOf(
     MilitaryTime(9, 40) to PLSQL_LAB,
     MilitaryTime(10, 30) to PLSQL_LAB,
     MilitaryTime(11, 20) to LA_LAB,

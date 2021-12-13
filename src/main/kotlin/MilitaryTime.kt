@@ -11,7 +11,7 @@ data class MilitaryTime(val hours: Int, val minutes: Int) {
             hours.toString().padStart(2, '0') +
                     minutes.toString().padStart(2, '0')
 
-    // Adds two MilitaryTime instances
+    // Add two MilitaryTime instances
     fun add(timeToAdd: MilitaryTime): MilitaryTime {
 
         val totalMinutes = minutes + timeToAdd.minutes
@@ -24,7 +24,7 @@ data class MilitaryTime(val hours: Int, val minutes: Int) {
         return MilitaryTime(newHours, newMinutes)
     }
 
-    // Subtracts two MilitaryTime instances
+    // Subtract a MilitaryTime instance from the current instance
     fun subtract(timeToSubtract: MilitaryTime): MilitaryTime {
         assert(hours > timeToSubtract.hours || (hours == timeToSubtract.hours && minutes > timeToSubtract.minutes))
 
