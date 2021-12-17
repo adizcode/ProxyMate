@@ -119,8 +119,10 @@ fun main() {
             // Open class and log entry
             println("Joining class: $onlineClassVal at ${getCurrentTime()}")
 
-            // TODO: Sleep for the remaining class time
-            Thread.sleep(5000)
+            // Sleep for the remaining class time
+            val exitTime = onlineClassKey.add(MilitaryTime(0, 40))
+            val remainingTime = exitTime.subtract(MilitaryTime(getCurrentTime()))
+            Thread.sleep(remainingTime.toMillis())
 
             // Close class and log exit
             println("Exiting class: $onlineClassVal at ${getCurrentTime()}")
