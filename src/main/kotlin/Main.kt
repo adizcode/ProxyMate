@@ -60,7 +60,7 @@ fun main() {
 
                 val diffMilitaryTime = onlineClassKey.subtract(currentMilitaryTime)
 
-                println("The $onlineClassKey $onlineClassVal class will start in ${diffMilitaryTime.time}")
+                println("The ${onlineClassKey.time} $onlineClassVal class will start in ${diffMilitaryTime.time}")
                 println("Sleeping...")
                 Thread.sleep(diffMilitaryTime.toMillis())
             }
@@ -81,11 +81,33 @@ fun main() {
             // Wait for the desired course to be visible and click on it
             val byOnlineClassName = By.linkText(onlineClassVal)
             explicitWait.until(ExpectedConditions.presenceOfElementLocated(byOnlineClassName))
-            findElement(byOnlineClassName).click()
+            findElements(byOnlineClassName)[0].click()
 
+            // Try to access the sessions list dropdown
+            try {
+                val bySessionsList = By.id("sessions-list")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(bySessionsList))
+                val sessionsList = findElement(bySessionsList)
+
+                var index = 1
+
+                val firstRoomText = sessionsList.findElement(By.xpath("li[$index]/a/span")).getAttribute("innerText")
+                println("The first room is $firstRoomText")
+
+                if (firstRoomText == "Course Room") {
+                    index = 2
+                }
+
+                val clickRoom = sessionsList.findElement(By.xpath("li[$index]/a"))
+                clickRoom.click()
+                println("Join button clicked!")
+                println("Joining: ${clickRoom.findElement(By.tagName("span")).text}")
+            }
+
+            // Error is thrown
             // Room is not yet available, retry after 1 minute
-            // TODO: Place a proper condition
-            if (true) {
+            catch (e: Exception) {
+                println("Exception thrown: $e")
                 println("Room for the ${onlineClassKey.time} $onlineClassVal class is not yet available.")
                 println("Will try again after 1 minute...")
                 navigate().back()
