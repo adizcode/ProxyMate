@@ -64,3 +64,7 @@ val TIME_TABLE = mapOf(
 
 // TODO: Update the index before running the program
 val TODAY_TIME_TABLE = TIME_TABLE[TUE]!!
+
+val ENTRY_RELAXATION = MilitaryTime(0, 10)
+
+val CLASS_DURATION = MilitaryTime(0, 40)
