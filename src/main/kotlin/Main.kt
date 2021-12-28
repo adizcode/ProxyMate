@@ -2,6 +2,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
+import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
@@ -11,14 +12,16 @@ fun main() {
     val timeTable = TIME_TABLE.toMutableMap()
 
     // Specify chromedriver path
-    System.setProperty("webdriver.chrome.driver", "/opt/WebDriver/bin/chromedriver")
+    System.setProperty("webdriver.chrome.driver", "/home/adizcode/Documents/WebDrivers/chromedriver")
 
-    // TODO: Removing this causes Chrome to crash
     val options = ChromeOptions().apply {
-        addArguments("--no-sandbox")
+        addArguments("use-fake-device-for-media-stream")
+        addArguments("use-fake-ui-for-media-stream")
     }
 
     val driver = ChromeDriver(options).apply {
+
+        manage().window().maximize()
 
         val explicitWait = WebDriverWait(this, Duration.ofSeconds(15))
 
@@ -91,17 +94,29 @@ fun main() {
 
                 var index = 1
 
-                val firstRoomText = sessionsList.findElement(By.xpath("li[$index]/a/span")).getAttribute("innerText")
+                val byFirstRoomLink = By.xpath("//*[@id='sessions-list']/li[$index]/a/span")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(byFirstRoomLink))
+                val firstRoomText = findElement(byFirstRoomLink).getAttribute("innerText")
                 println("The first room is $firstRoomText")
 
                 if (firstRoomText == "Course Room") {
                     index = 2
                 }
 
-                val clickRoom = sessionsList.findElement(By.xpath("li[$index]/a"))
+                val byDropdownButton = By.id("sessions-list-dropdown")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(byDropdownButton))
+                explicitWait.until(ExpectedConditions.elementToBeClickable(byDropdownButton))
+                findElement(byDropdownButton).click()
+
+                val byClassLink = By.xpath("//*[@id='sessions-list']/li[$index]/a")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(byClassLink))
+                val clickRoom = findElement(byClassLink)
+                explicitWait.until(ExpectedConditions.elementToBeClickable(byClassLink))
                 clickRoom.click()
                 println("Join button clicked!")
-                println("Joining: ${clickRoom.findElement(By.tagName("span")).text}")
+                println("Joining: ${clickRoom.findElement(By.tagName("span")).getAttribute("innerText")}")
+                val tabs = windowHandles.toList()
+                switchTo().window(tabs[1])
             }
 
             // Error is thrown
@@ -115,6 +130,21 @@ fun main() {
                 Thread.sleep(60 * 1000)
                 continue
             }
+
+            val byAudioTestButton = By.xpath("/html/body/div[3]/div/div[2]/div/div/div[2]/button")
+            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byAudioTestButton))
+            explicitWait.until(ExpectedConditions.elementToBeClickable(byAudioTestButton))
+            findElement(byAudioTestButton).click()
+
+            val byVideoTestButton = By.id("techcheck-video-ok-button")
+            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byVideoTestButton))
+            explicitWait.until(ExpectedConditions.elementToBeClickable(byVideoTestButton))
+            findElement(byVideoTestButton).click()
+
+            val byCloseTutorialButton = By.xpath("/html/body/div[1]/div[2]/div/div/button")
+            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byCloseTutorialButton))
+            explicitWait.until(ExpectedConditions.elementToBeClickable(byCloseTutorialButton))
+            findElement(byCloseTutorialButton).click()
 
             // Open class and log entry
             println("Joining class: $onlineClassVal at ${getCurrentTime()}")
