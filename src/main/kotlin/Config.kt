@@ -12,9 +12,7 @@ const val LA_LAB = "LINUX ADMINISTRATION LAB"
 const val PLSQL_LAB = "PL/SQL LAB"
 const val SPM = "SOFTWARE PROJECT MANAGEMENT"
 
-// TODO: Set proper time-table
-// Time Table
-val TIME_TABLE = linkedMapOf(
+val MONDAY_TIME_TABLE = linkedMapOf(
     MilitaryTime(9, 40) to PLSQL_LAB,
     MilitaryTime(10, 30) to PLSQL_LAB,
     MilitaryTime(11, 20) to LA_LAB,
@@ -22,3 +20,38 @@ val TIME_TABLE = linkedMapOf(
     MilitaryTime(13, 50) to LA_LAB,
     MilitaryTime(14, 40) to LA_LAB,
 )
+
+val TUESDAY_TIME_TABLE = linkedMapOf(
+    MilitaryTime(9, 40) to DAA_LAB,
+    MilitaryTime(10, 30) to DAA_LAB,
+    MilitaryTime(11, 20) to ADBMS,
+)
+
+val WEDNESDAY_TIME_TABLE = linkedMapOf(
+    MilitaryTime(9, 40) to PLSQL_LAB,
+    MilitaryTime(10, 30) to PLSQL_LAB,
+    MilitaryTime(11, 20) to DAA_LAB,
+    MilitaryTime(12, 10) to DAA_LAB,
+    MilitaryTime(13, 50) to AOS,
+)
+
+val THURSDAY_TIME_TABLE = linkedMapOf(
+    MilitaryTime(9, 40) to ACN,
+    MilitaryTime(10, 30) to SPM,
+    MilitaryTime(11, 20) to DAA,
+    MilitaryTime(13, 0) to ADBMS,
+    MilitaryTime(13, 50) to DAA,
+    MilitaryTime(14, 45) to ACN,
+)
+
+val FRIDAY_TIME_TABLE = linkedMapOf(
+    MilitaryTime(9, 40) to AOS,
+    MilitaryTime(10, 30) to DAA,
+    MilitaryTime(11, 20) to ADBMS,
+    MilitaryTime(13, 0) to SPM,
+    MilitaryTime(13, 50) to AOS,
+    MilitaryTime(14, 45) to ACN,
+)
+
+// Time Table
+val TIME_TABLE = TUESDAY_TIME_TABLE
