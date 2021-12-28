@@ -125,20 +125,35 @@ fun main() {
                 continue
             }
 
-            val byAudioTestButton = By.xpath("/html/body/div[3]/div/div[2]/div/div/div[2]/button")
-            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byAudioTestButton))
-            explicitWait.until(ExpectedConditions.elementToBeClickable(byAudioTestButton))
-            findElement(byAudioTestButton).click()
+            try {
+                val byAudioTestButton = By.xpath("/html/body/div[3]/div/div[2]/div/div/div[2]/button")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(byAudioTestButton))
+                explicitWait.until(ExpectedConditions.elementToBeClickable(byAudioTestButton))
+                findElement(byAudioTestButton).click()
+            } catch (e: Exception) {
+                println("Exception thrown: $e")
+                println("Did not come across any audio test button. Moving on.")
+            }
 
-            val byVideoTestButton = By.id("techcheck-video-ok-button")
-            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byVideoTestButton))
-            explicitWait.until(ExpectedConditions.elementToBeClickable(byVideoTestButton))
-            findElement(byVideoTestButton).click()
+            try {
+                val byVideoTestButton = By.id("techcheck-video-ok-button")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(byVideoTestButton))
+                explicitWait.until(ExpectedConditions.elementToBeClickable(byVideoTestButton))
+                findElement(byVideoTestButton).click()
+            } catch (e: Exception) {
+                println("Exception thrown: $e")
+                println("Did not come across any video test button. Moving on.")
+            }
 
-            val byCloseTutorialButton = By.xpath("/html/body/div[1]/div[2]/div/div/button")
-            explicitWait.until(ExpectedConditions.presenceOfElementLocated(byCloseTutorialButton))
-            explicitWait.until(ExpectedConditions.elementToBeClickable(byCloseTutorialButton))
-            findElement(byCloseTutorialButton).click()
+            try {
+                val byCloseTutorialButton = By.xpath("/html/body/div[1]/div[2]/div/div/button")
+                explicitWait.until(ExpectedConditions.presenceOfElementLocated(byCloseTutorialButton))
+                explicitWait.until(ExpectedConditions.elementToBeClickable(byCloseTutorialButton))
+                findElement(byCloseTutorialButton).click()
+            } catch (e: Exception) {
+                println("Exception thrown: $e")
+                println("Did not come across any close tutorial button. Moving on.")
+            }
 
             // Open class and log entry
             println("Joining class: $onlineClassVal at ${getCurrentTime()}")
