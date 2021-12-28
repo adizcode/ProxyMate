@@ -2,7 +2,6 @@ import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.chrome.ChromeOptions
-import org.openqa.selenium.interactions.Actions
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
@@ -67,11 +66,6 @@ fun main() {
                 println("Sleeping...")
                 Thread.sleep(diffMilitaryTime.toMillis())
             }
-
-            // Wait for the search icon to appear and then click on it
-            val bySearchIcon = By.cssSelector("#main-content-inner > div > header > div > div > button > bb-svg-icon")
-            explicitWait.until(ExpectedConditions.presenceOfElementLocated(bySearchIcon))
-            findElement(bySearchIcon).click()
 
             // Type subject name in the search box
             val bySearchBox = By.cssSelector("input[aria-label='Search your courses']")
