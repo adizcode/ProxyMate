@@ -150,6 +150,9 @@ fun main() {
 
             // Close class and log exit
             println("Exiting class: $onlineClassVal at ${getCurrentTime()}")
+            close()
+            val tabs = windowHandles.toList()
+            switchTo().window(tabs[0])
             navigate().back()
             navigate().refresh()
 

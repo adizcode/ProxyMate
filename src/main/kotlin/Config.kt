@@ -12,6 +12,7 @@ const val LA_LAB = "LINUX ADMINISTRATION LAB"
 const val PLSQL_LAB = "PL/SQL LAB"
 const val SPM = "SOFTWARE PROJECT MANAGEMENT"
 
+// TODO: Set proper time-table
 // Time Table
 val TIME_TABLE = linkedMapOf(
     MilitaryTime(9, 40) to PLSQL_LAB,
