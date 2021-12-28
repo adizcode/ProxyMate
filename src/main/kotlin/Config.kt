@@ -54,4 +54,13 @@ val FRIDAY_TIME_TABLE = linkedMapOf(
 )
 
 // Time Table
-val TIME_TABLE = TUESDAY_TIME_TABLE
+val TIME_TABLE = mapOf(
+    MON to MONDAY_TIME_TABLE,
+    TUE to TUESDAY_TIME_TABLE,
+    WED to WEDNESDAY_TIME_TABLE,
+    THU to THURSDAY_TIME_TABLE,
+    FRI to FRIDAY_TIME_TABLE,
+)
+
+// TODO: Update the index before running the program
+val TODAY_TIME_TABLE = TIME_TABLE[TUE]!!

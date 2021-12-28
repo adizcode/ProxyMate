@@ -8,7 +8,7 @@ import java.time.Duration
 
 fun main() {
 
-    val timeTable = TIME_TABLE.toMutableMap()
+    val timeTable = TODAY_TIME_TABLE
 
     // Specify chromedriver path
     System.setProperty("webdriver.chrome.driver", "/home/adizcode/Documents/WebDrivers/chromedriver")
