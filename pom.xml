@@ -85,6 +85,16 @@
             <artifactId>selenium-java</artifactId>
             <version>4.1.2</version>
         </dependency>
+        <dependency>
+            <groupId>com.sksamuel.hoplite</groupId>
+            <artifactId>hoplite-core</artifactId>
+            <version>1.4.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sksamuel.hoplite</groupId>
+            <artifactId>hoplite-yaml</artifactId>
+            <version>1.4.16</version>
+        </dependency>
     </dependencies>
 
 </project>
