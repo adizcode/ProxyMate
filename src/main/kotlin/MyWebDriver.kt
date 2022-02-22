@@ -138,7 +138,7 @@ object MyWebDriver {
     }
 
     private fun clickOnClassCourse(onlineClassName: String?) {
-        val byOnlineClassName = By.linkText(onlineClassName)
+        val byOnlineClassName = By.linkText(onlineClassName!!.uppercase())
         explicitWait.until(ExpectedConditions.presenceOfElementLocated(byOnlineClassName))
         driver.findElements(byOnlineClassName)[0].click()
     }
