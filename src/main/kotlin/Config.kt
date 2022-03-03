@@ -11,41 +11,43 @@ const val AIP = "Advanced Internet Programming"
 const val AIP_LAB = "Advanced Internet Programming Lab"
 
 val MONDAY_TIME_TABLE = linkedMapOf(
-    MilitaryTime(9, 40) to AIP_LAB,
-    MilitaryTime(10, 30) to AIP_LAB,
+    MilitaryTime(9, 40) to CA,
+    MilitaryTime(10, 30) to CA,
     MilitaryTime(11, 20) to PP,
-    MilitaryTime(13, 0) to CA,
-    MilitaryTime(13, 50) to CA,
+    MilitaryTime(12, 10) to PP,
 )
 
 val TUESDAY_TIME_TABLE = linkedMapOf(
-    MilitaryTime(9, 40) to AIP_LAB,
-    MilitaryTime(10, 30) to AIP_LAB,
-    MilitaryTime(11, 20) to AIP,
-    MilitaryTime(13, 0) to PP,
-    MilitaryTime(13, 50) to PP,
-    MilitaryTime(14, 40) to APT,
-    MilitaryTime(15, 30) to APT,
+    MilitaryTime(9, 40) to SS,
+    MilitaryTime(10, 30) to SS,
+    MilitaryTime(11, 20) to APT,
+    MilitaryTime(12, 10) to APT,
+    MilitaryTime(14, 0) to AIP,
+    MilitaryTime(14, 50) to PP,
 )
 
 val WEDNESDAY_TIME_TABLE = linkedMapOf(
-    MilitaryTime(9, 40) to CA,
-    MilitaryTime(10, 30) to CA,
+    MilitaryTime(9, 40) to SS,
+    MilitaryTime(10, 30) to SS,
     MilitaryTime(11, 20) to AIP,
+    MilitaryTime(13, 10) to PP,
 )
 
 val THURSDAY_TIME_TABLE = linkedMapOf(
-    MilitaryTime(9, 40) to SS,
-    MilitaryTime(10, 30) to SS,
+    MilitaryTime(9, 40) to AIP_LAB,
+    MilitaryTime(10, 30) to AIP_LAB,
+    MilitaryTime(11, 20) to AIP,
+    MilitaryTime(13, 10) to PP,
+    MilitaryTime(14, 0) to PP
 )
 
 val FRIDAY_TIME_TABLE = linkedMapOf(
-    MilitaryTime(9, 40) to SS,
-    MilitaryTime(10, 30) to SS,
-    MilitaryTime(11, 20) to AIP,
-    MilitaryTime(12, 10) to PP,
-    MilitaryTime(13, 50) to APT,
-    MilitaryTime(14, 40) to APT,
+    MilitaryTime(9, 40) to AIP_LAB,
+    MilitaryTime(10, 30) to AIP_LAB,
+    MilitaryTime(11, 20) to CA,
+    MilitaryTime(12, 10) to CA,
+    MilitaryTime(14, 0) to APT,
+    MilitaryTime(14, 50) to APT,
 )
 
 // Time Table
@@ -58,7 +60,7 @@ val TIME_TABLE = mapOf(
 )
 
 // TODO: Update the index before running the program
-val TODAY_TIME_TABLE = TIME_TABLE[TUE]!!
+val TODAY_TIME_TABLE = TIME_TABLE[WED]!!
 
 val ENTRY_RELAXATION = MilitaryTime(0, 10)
 
