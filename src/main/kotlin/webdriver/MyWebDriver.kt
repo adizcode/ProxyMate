@@ -1,3 +1,8 @@
+package webdriver
+
+import common.getCurrentTimeString
+import model.MilitaryTime
+import model.ProcessedConfig
 import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 import org.openqa.selenium.chrome.ChromeDriver
@@ -6,10 +11,17 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 import java.time.Duration
 
-object MyWebDriver {
+class MyWebDriver(config: ProcessedConfig) {
 
     private val driver: ChromeDriver
     private val explicitWait: WebDriverWait
+
+    private val url: String
+    private val username: String
+    private val password: String
+    private val lectureDuration: MilitaryTime
+    private val entryRelaxation: MilitaryTime
+    private val currentTimeTable: LinkedHashMap<MilitaryTime, String>
 
     init {
 
@@ -22,6 +34,15 @@ object MyWebDriver {
         driver = ChromeDriver(options)
 
         explicitWait = initDefaultExplicitWait()
+
+        // Destructure config properties
+        val (url, username, password, lectureDuration, entryRelaxation, currentTimeTable) = config
+        this.url = url
+        this.username = username
+        this.password = password
+        this.lectureDuration = lectureDuration
+        this.entryRelaxation = entryRelaxation
+        this.currentTimeTable = currentTimeTable
     }
 
     fun maximizeWindow() {
@@ -29,7 +50,7 @@ object MyWebDriver {
     }
 
     fun goToBlackboard() {
-        driver.get(BLACKBOARD_URL)
+        driver.get(url)
     }
 
     fun acceptCookies() {
@@ -44,19 +65,23 @@ object MyWebDriver {
     }
 
     fun login() {
-        driver.findElement(By.id("user_id")).sendKeys(USERNAME)
-        driver.findElement(By.id("password")).sendKeys(PASSWORD + Keys.ENTER)
+        driver.findElement(By.id("user_id")).sendKeys(username)
+        driver.findElement(By.id("password")).sendKeys(password + Keys.ENTER)
     }
 
-    fun attendClassesAsPerTimeTable(timeTable: LinkedHashMap<MilitaryTime, String>) {
+    fun attendClassesAsPerTimeTable() {
+
         var classIndex = 0
 
-        while (classIndex < timeTable.size) {
+        while (classIndex < currentTimeTable.size) {
 
-            val onlineClassTime: MilitaryTime = timeTable.keys.elementAt(classIndex)
-            val onlineClassName = timeTable[onlineClassTime]
+            val onlineClassTime: MilitaryTime = currentTimeTable.keys.elementAt(classIndex)
+            val onlineClassName = currentTimeTable[onlineClassTime]
 
-            val result = attendClass(onlineClassTime, onlineClassName)
+            val result = attendClass(
+                onlineClassTime = onlineClassTime,
+                onlineClassName = onlineClassName,
+            )
 
             // Result = false = "Class Missed"
             // Result = true = "Class Attended"
@@ -68,12 +93,15 @@ object MyWebDriver {
         }
     }
 
-    private fun attendClass(onlineClassTime: MilitaryTime, onlineClassName: String?): Boolean? {
+    private fun attendClass(
+        onlineClassTime: MilitaryTime,
+        onlineClassName: String?,
+    ): Boolean? {
 
         val currentTime = MilitaryTime(getCurrentTimeString())
 
         // Entering class after this time gets you marked "Absent"
-        val lastEntryTime = onlineClassTime.add(ENTRY_RELAXATION.subtract(MilitaryTime(0, 1)))
+        val lastEntryTime = onlineClassTime.add(entryRelaxation.subtract(MilitaryTime(0, 1)))
 
         println("Current Time: ${currentTime.time}")
         println("Class Time: ${onlineClassTime.time}")
@@ -104,17 +132,15 @@ object MyWebDriver {
         // Open class and log entry
         println("Joining class: $onlineClassName at ${getCurrentTimeString()}")
 
-        waitForClassToFinish(onlineClassTime)
+        waitForClassToFinish(onlineClassTime = onlineClassTime)
 
-        exitClass(onlineClassName)
+        exitClass(onlineClassName = onlineClassName)
 
         return true
     }
 
     private fun waitForClassToStart(
-        onlineClassTime: MilitaryTime,
-        currentTime: MilitaryTime,
-        onlineClassName: String?
+        onlineClassTime: MilitaryTime, currentTime: MilitaryTime, onlineClassName: String?
     ) {
         val diffTime = onlineClassTime.subtract(currentTime)
 
@@ -243,7 +269,7 @@ object MyWebDriver {
     }
 
     private fun waitForClassToFinish(onlineClassTime: MilitaryTime) {
-        val exitTime = onlineClassTime.add(CLASS_DURATION)
+        val exitTime = onlineClassTime.add(lectureDuration)
         val remainingTime = exitTime.subtract(MilitaryTime(getCurrentTimeString()))
         Thread.sleep(remainingTime.toMillis())
     }

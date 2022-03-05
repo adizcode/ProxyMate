@@ -1,0 +1,89 @@
+# 1. Create a copy of this file and name it "config.yaml"
+# 2. Make the required changes inside it
+# 3. Run the program
+
+# Your Blackboard login
+url: https://cuchd.blackboard.com/
+
+credentials:
+  username: 21MCA2284
+  password: Your_Password_123
+
+
+# Duration of each lecture and entry relaxation in military time
+lecture_duration: "0040"
+entry_relaxation: "0010"
+
+
+# Your subjects as visible on your Blackboard (case-sensitive)
+# Also, declare shorthands for each subject here (like 'pp', 'ca')
+subjects:
+  - &pp "Python Programming"
+  - &ca "Computing Aptitude"
+  - &apt "Aptitude - 1"
+  - &ss "Soft Skills -1"
+  - &aip "Advanced Internet Programming"
+  - &aip_lab "Advanced Internet Programming Lab"
+
+
+# Your weekly timetable (below)
+#
+# For each day:
+#
+#       On the left is the lecture time (military time)
+#       On the right is the lecture subject (using the shorthand you declared earlier)
+#
+# You only need to add / remove lectures as required
+time_table:
+
+  Monday:
+    "0940": *ca
+    "1030": *ca
+    "1120": *pp
+    "1210": *pp
+
+  Tuesday:
+    "0940": *ss
+    "1030": *ss
+    "1120": *apt
+    "1210": *apt
+    "1400": *aip
+    "1450": *pp
+
+  Wednesday:
+    "0940": *ss
+    "1030": *ss
+    "1120": *aip
+    "1310": *pp
+
+  Thursday:
+    "0940": *aip_lab
+    "1030": *aip_lab
+    "1120": *aip
+    "1310": *pp
+    "1400": *pp
+
+  Friday:
+    "0940": *aip_lab
+    "1030": *aip_lab
+    "1120": *ca
+    "1210": *ca
+    "1400": *apt
+    "1450": *apt
+
+
+#############################################
+#                                           #
+#                                           #
+#             Author: adizcode              #
+#       Special thanks: vishaltanwar96      #
+#                                           #
+#                                           #
+#      This document is written in YAML     #
+#                                           #
+#                                           #
+#          Learn YAML in Y minutes          #
+#  https://learnxinyminutes.com/docs/yaml/  #
+#                                           #
+#                                           #
+#############################################

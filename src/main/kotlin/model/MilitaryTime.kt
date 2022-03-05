@@ -1,3 +1,5 @@
+package model
+
 data class MilitaryTime(val hours: Int, val minutes: Int) {
 
     init {
